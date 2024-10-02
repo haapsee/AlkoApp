@@ -1,0 +1,37 @@
+version: "3"
+services:
+  server:
+    build:
+      context: ./server
+    ports:
+      - 8080:80
+    depends_on:
+      mariadb:
+        condition: service_healthy
+    environment:
+      - DB_HOST=mariadb
+      - DB_NAME=development
+      - DB_USER=root
+      - DB_PASSWORD=development
+      - CURRENCY_ACCESS=<INSERT_TOKEN>
+    develop:
+      watch:
+        - action: sync
+          path: ./server/app
+          target: /var/www/html
+  mariadb:
+    image: mariadb:11.5
+    user: root
+    volumes:
+      - ./mariadb/data:/var/lib/mysql
+      - ./mariadb/init.sql:/docker-entrypoint-initdb.d/init.sql
+    environment:
+      - MARIADB_DATABASE=development
+      - MARIADB_ROOT_PASSWORD=development
+    expose:
+      - 3306
+    healthcheck:
+      test:  ["CMD", "/usr/local/bin/healthcheck.sh", "--su-mysql", "--connect",  "--innodb_initialized"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
