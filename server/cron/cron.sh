@@ -1,0 +1,1 @@
+/usr/local/bin/php /cron/main.php

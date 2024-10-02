@@ -7,9 +7,12 @@ require 'query_alko.php';
 require 'query_currency_multiplier.php';
 
 function main() {
-    $inputFile = 'alko.xslx';
+    $inputFile = '/alko.xslx';
     $currencyMultiplier = 0.8;
-    // $currencyMultiplier = getCurrencyMultiplier("EUR", array("GBP"), getenv('CURRENCY_ACCESS'))[0];
+    echo "TOKEN: " . getenv('CURRENCY_ACCESS') . "\n";
+    if (getenv('CURRENCY_ACCESS') != '<INSERT TOKEN HERE>') {
+        $currencyMultiplier = getCurrencyMultiplier("EUR", array("GBP"), getenv('CURRENCY_ACCESS'))[0];
+    }
     getAlkoExcel($inputFile);
 
     try {

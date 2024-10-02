@@ -4,5 +4,5 @@
 #  / / / ,--- MONTH
 # / / / / ,-- DAY OF WEEK
 #/ / / / /
-0 */6 * * *  php /cron/main.php
+* */6 * * * cd /cron && ./cron.sh
 #

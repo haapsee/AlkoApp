@@ -9,6 +9,7 @@ services:
       mariadb:
         condition: service_healthy
     environment:
+      - TZ=Europe/Helsinki
       - DB_HOST=mariadb
       - DB_NAME=development
       - DB_USER=root
@@ -26,6 +27,7 @@ services:
       # - ./mariadb/data:/var/lib/mysql
       - ./mariadb/init.sql:/docker-entrypoint-initdb.d/init.sql
     environment:
+      - TZ=Europe/Helsinki
       - MARIADB_DATABASE=development
       - MARIADB_ROOT_PASSWORD=development
     expose:
