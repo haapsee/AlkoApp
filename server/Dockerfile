@@ -27,7 +27,7 @@ COPY cron/*.php /cron/
 RUN chmod 0644 /etc/cron.d/cron
 RUN crontab /etc/cron.d/cron
 
-RUN sed -i 's/^exec /touch \/var\/log\/cron\/otherfile\n\nexec /' /usr/local/bin/apache2-foreground
+RUN sed -i 's/^exec /php \/cron\/main.php\n\nexec /' /usr/local/bin/apache2-foreground
 RUN sed -i 's/^exec /service cron start\n\nexec /' /usr/local/bin/apache2-foreground
 
 COPY ./app /var/www/html
