@@ -13,7 +13,7 @@ services:
       - DB_NAME=development
       - DB_USER=root
       - DB_PASSWORD=development
-      - CURRENCY_ACCESS=<INSERT_TOKEN>
+      - CURRENCY_ACCESS=<INSERT TOKEN HERE>
     develop:
       watch:
         - action: sync
@@ -23,7 +23,7 @@ services:
     image: mariadb:11.5
     user: root
     volumes:
-      - ./mariadb/data:/var/lib/mysql
+      # - ./mariadb/data:/var/lib/mysql
       - ./mariadb/init.sql:/docker-entrypoint-initdb.d/init.sql
     environment:
       - MARIADB_DATABASE=development

@@ -1,5 +1,6 @@
 <?php
 
+require 'handle_sql.php';
 require 'reader_filter.php';
 
 
@@ -41,21 +42,25 @@ class ExcelHandler {
     }
 
     private function handleExcelRows($start, $end) {
+        $sqlhandler = new SQLHandler(getenv('DB_HOST'), getenv('DB_USER'), getenv('DB_PASSWORD'), getenv('DB_NAME'));
+
         $spreadsheet = $this->reader->load($this->inputFile);
         $sheet = $spreadsheet->getActiveSheet();
 
         for ($row = $start; $row < $end; $row++) {
 
             if ($sheet->getCell('A' . $row)->getValue()=='') {
+                $sqlhandler->close();
                 return true;
             }
 
-            echo $sheet->getCell('A' . $row)->getValue() . ", " .
-                $sheet->getCell('B' . $row)->getValue() . ", " .
-                $sheet->getCell('D' . $row)->getValue() . ", " .
-                $sheet->getCell('E' . $row)->getValue() . ", " .
-                $sheet->getCell('E' . $row)->getValue() * $this->currencyMultiplier . "\n";
+            $sqlhandler->addEntry($sheet->getCell('A' . $row)->getValue(),
+                $sheet->getCell('B' . $row)->getValue(),
+                $sheet->getCell('D' . $row)->getValue(),
+                $sheet->getCell('E' . $row)->getValue(),
+                $sheet->getCell('E' . $row)->getValue() * $this->currencyMultiplier);
         }
+        $sqlhandler->close();
         return false;
     }
 }
