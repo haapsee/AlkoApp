@@ -4,5 +4,5 @@
 #  / / / ,--- MONTH
 # / / / / ,-- DAY OF WEEK
 #/ / / / /
-* */6 * * * cd /cron && ./cron.sh
+0 */6 * * * cd /cron && ./cron.sh
 #
